@@ -36,7 +36,7 @@
           <label for="loginId">이메일</label>
         </div>
         <div class="form-floating">
-          <input type="password" class="form-control" id="loginPw" v-model="state.form.loginPw" placeholder="패스워드">
+          <input type="password" class="form-control" id="loginPw" v-model="state.form.loginPw" placeholder="패스워드" autocomplete="off">
           <label for="loginPw">패스워드</label>
         </div>
         <button type="submit" class="w-100 h6 btn py-3 btn-primary">로그인</button>
