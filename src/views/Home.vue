@@ -1,5 +1,16 @@
 <script setup>
+  import { onMounted } from 'vue';
+  import { getItems } from '@/services/itemService';
 
+  onMounted(async () => {
+    const res = await getItems();
+
+    if (res === undefined || res.status !== 200) {
+      return;
+    }
+
+    console.log(res.data);
+  });
 </script>
 
 <template>
