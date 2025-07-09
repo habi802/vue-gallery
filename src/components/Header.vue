@@ -22,7 +22,7 @@ const logoutAccount = async () => {
 
 <template>
   <header>
-    <div class="navbar navbar-dark bg-dark text-white shadow-sm">
+    <div class="navbar navbar-light text-white shadow-sm">
       <div class="container">
         <router-link to="/" class="navbar-brand">
           <strong>Gallery</strong>
@@ -45,6 +45,14 @@ const logoutAccount = async () => {
 
 <style lang="scss" scoped>
   header {
+    .navbar {
+      background-color: #86E57F;
+
+      strong {
+        color: #E0844F;
+      }  
+    }
+
     .menus {
       a {
         cursor: pointer;
