@@ -2,8 +2,10 @@
   import { computed } from 'vue';
   import { useAccountStore } from '@/stores/account';
   import { addItem } from '@/services/cartService';
+  import { useRouter } from 'vue-router';
 
   const account = useAccountStore();
+  const router = useRouter();
 
   // 프로퍼티 객체
   const props = defineProps({
@@ -24,7 +26,7 @@
   // 장바구니에 상품 담기
   const put = async () => {
     if (!account.state.loggedIn) {
-      alert('로그인해라');
+      alert('로그인해주세요.');
       return;
     }
 
@@ -32,9 +34,10 @@
 
     if (res === undefined || res.status !== 200) {
       return;
+    } else if (confirm('장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?')) {
+      router.push( { path: '/cart' });
+      console.log('카트 담기 성공');
     }
-
-    console.log('카트 담기 성공!');
   };
 </script>
 
