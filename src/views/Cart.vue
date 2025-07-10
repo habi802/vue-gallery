@@ -36,12 +36,15 @@
       const deleteIdx = state.items.findIndex(item => item.id === cartId);
       if (deleteIdx > -1) {
         state.items.splice(deleteIdx, 1);
+        calculateTotal();
       }
     }
   };
 
   // 장바구니 총 금액
   const calculateTotal = () => {
+    total.value = 0;
+
     state.items.forEach(item => {
       const price = item.price - item.price * item.discountPer / 100;
       total.value += price;
