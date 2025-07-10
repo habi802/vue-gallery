@@ -9,5 +9,9 @@ export const getItems = () => {
 }
 
 export const removeItem = cartId => {
-  return axios.delete('/cart', { params: { cartId } }).catch(e => e.response);
+  return axios.delete(`/cart/${cartId}`).catch(e => e.response);
+}
+
+export const removeCart = () => {
+  return axios.delete('/cart').catch(e => e.response);
 }

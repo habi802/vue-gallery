@@ -1,5 +1,5 @@
 <script setup>
-  import { getItems, removeItem } from '@/services/cartService';
+  import { getItems, removeItem, removeCart } from '@/services/cartService';
   import { onMounted, reactive, ref } from 'vue';
 
   const state = reactive({
@@ -53,6 +53,20 @@
     total.value = total.value.toLocaleString();
   };
 
+  // 장바구니 비우기
+  const clear = async () => {
+    if (!confirm('장바구니를 비우시겠습니까?')) {
+      return;
+    }
+
+    const res = await removeCart();
+    if (res === undefined || res.status !== 200) {
+      return;
+    }
+
+    state.items = [];
+  }
+
   onMounted(() => {
     load();
   })
@@ -76,7 +90,8 @@
             <span class="price">{{ total }}원</span>
           </li>
         </ul>
-        <div class="act">
+        <div class="act d-flex justify-content-around">
+          <button @click="clear" class="btn btn-danger">장바구니 비우기</button>
           <router-link to="/order" class="btn btn-primary">주문하기</router-link>
         </div>
       </template>
@@ -127,7 +142,6 @@
     .act .btn {
       width: 300px;
       display: block;
-      margin: 0 auto;
       padding: 30px 50px;
       font-size: 20px;
     }
