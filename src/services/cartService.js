@@ -8,6 +8,6 @@ export const getItems = () => {
   return axios.get('/cart').catch(e => e.response);
 }
 
-export const removeItem = id => {
-  
+export const removeItem = cartId => {
+  return axios.delete('/cart', { params: { cartId } }).catch(e => e.response);
 }

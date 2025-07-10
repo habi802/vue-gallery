@@ -1,10 +1,12 @@
 <script setup>
   import { getItems, removeItem } from '@/services/cartService';
-  import { onMounted, reactive } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
 
   const state = reactive({
     items: []
   });
+
+  const total = ref(0);
 
   // 장바구니 상품 조회
   const load = async () => {
@@ -15,16 +17,37 @@
     }
 
     state.items = res.data;
+    calculateTotal();
   };
 
   // 장바구니 상품 삭제
-  const remove = async id => {
-    // const res = await removeItem(itemId);
+  const remove = async cartId => {
+    if (!confirm('삭제하시겠습니까?')) {
+      return;
+    }
+    
+    const res = await removeItem(cartId);
+    if (res === undefined || res.status !== 200) {
+      return;
+    }
 
-    // if (res.status === 200) {
-    //   alert('삭제됨.');
-    //   load();
-    // }
+    //load();
+    if (res.data === 1) {
+      const deleteIdx = state.items.findIndex(item => item.id === cartId);
+      if (deleteIdx > -1) {
+        state.items.splice(deleteIdx, 1);
+      }
+    }
+  };
+
+  // 장바구니 총 금액
+  const calculateTotal = () => {
+    state.items.forEach(item => {
+      const price = item.price - item.price * item.discountPer / 100;
+      total.value += price;
+    });
+
+    total.value = total.value.toLocaleString();
   };
 
   onMounted(() => {
@@ -45,6 +68,10 @@
             </span>
             <span class="remove float-end" @click="remove(i.id)" title="삭제">&times;</span>
           </li>
+          <li class="total">
+            <b>총 금액</b>
+            <span class="price">{{ total }}원</span>
+          </li>
         </ul>
         <div class="act">
           <router-link to="/order" class="btn btn-primary">주문하기</router-link>
@@ -63,7 +90,7 @@
       list-style: none;
       margin: 0;
       padding: 0;
-
+  
       li {
         border: 1px solid #eee;
         margin-top: 25px;
@@ -87,6 +114,10 @@
         cursor: pointer;
         font-size: 30px;
         padding: 5px 15px;
+      }
+
+      .total {
+        padding: 25px 50px;
       }
     }
 
