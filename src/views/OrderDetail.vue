@@ -1,6 +1,7 @@
 <script setup>
   import { onMounted, reactive } from 'vue';
   import { useRoute } from 'vue-router';
+  import { getOrder } from '@/services/orderService';
 
   const route = useRoute();
 
@@ -18,6 +19,14 @@
 
   onMounted(async () => {
     const id = route.params.id;
+    const res = await getOrder(id);
+
+    if (res === undefined || res.status !== 200) {
+      alert('오류 발생!');
+      return;
+    }
+
+    state.order = res.data;
   });
 </script>
 
