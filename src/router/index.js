@@ -4,6 +4,8 @@ import Join from '@/views/Join.vue'
 import Login from '@/views/Login.vue'
 import Cart from '@/views/Cart.vue'
 import Order from '@/views/OrderForm.vue'
+import Orders from '@/views/Orders.vue'
+import OrderDetail from '@/views/OrderDetail.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +34,16 @@ const router = createRouter({
       path: '/order',
       name: 'order',
       component: Order
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: Orders
+    },
+    {
+      path: '/orders/:id',
+      name: 'orderDetail',
+      component: OrderDetail
     },
   ],
 })

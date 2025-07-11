@@ -25,7 +25,7 @@
     <div class="container">
       <h1 class="mt-5">HELLO, HOME</h1>
       <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-3">
-        <div class="col" v-for="item in state.items">
+        <div class="col" v-for="item in state.items" :key="item.id">
           <Card :item="item" />
         </div>
       </div>
