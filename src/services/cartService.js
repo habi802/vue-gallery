@@ -1,17 +1,19 @@
 import axios from './httpRequester';
 
+const path = '/cart';
+
 export const addItem = itemId => {
-  return axios.post('/cart', { itemId }).catch(e => e.response);
+  return axios.post(path, { itemId }).catch(e => e.response);
 }
 
 export const getItems = () => {
-  return axios.get('/cart').catch(e => e.response);
+  return axios.get(path).catch(e => e.response);
 }
 
 export const removeItem = cartId => {
-  return axios.delete(`/cart/${cartId}`).catch(e => e.response);
+  return axios.delete(`${path}/${cartId}`).catch(e => e.response);
 }
 
 export const removeCart = () => {
-  return axios.delete('/cart').catch(e => e.response);
+  return axios.delete(path).catch(e => e.response);
 }
